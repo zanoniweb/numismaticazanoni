@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literarura Numismática</title>
+    <style>
+        body {
+            color: white;
+            background-color: black;
+            font-family: sans-serif;
+            align-items: center;
+        }
+        ul {
+            display: flex;
+            justify-content: space-between;
+            list-style-type: nome;
+            align-items: center;
+            padding: 16 px;
+        }
+        a {
+            color: blue;
+            text-decoration: nome;
+        }
+        a:active { 
+            color: red;
+        }    
+        header img {
+            width: 300px;
+            height: 200px;
+            border: 5px solid goldenrod;
+        }
+        table, th, td {
+        border: 1px solid white;
+        border-radius: 10px;
+        font-family: Geneva;
+        font-size: 15px; 
+        color: white;
+        text-align: center;
+        }
+        .section {
+            color: white;
+            font-family: sans-serif;
+            font-size: 30px; 
+        }
+        footer {
+        font-family: Geneva;
+        text-align: center;
+        font-size: 20px;
+        color: white;
+        }
+        .center {
+            text-align: center;
+        }
+        h7 {
+            color: red;
+            font-family: Geneva;
+            text-align: justify;
+            font-size: 45px; 
+        }
+        .container {
+            padding: 0px 35px;
+        }
+        nav a:hover {
+            color: blue;
+        }
+        @media print { 
+         #noprint { display:none; } 
+         body { background: #fff; }
+         }
+        </style>
+</head>
+<header>
+    <div class="center">
+    <nav>
+<ul>
+    <a href="index.html">A história da loja</a>
+    <a href="fichasbrasil.html">Fichas do Brasil</a>
+    <a href="moedasavenda.html">Moedas a Venda Brasil</a>
+    <a href="moedasanomalas.html">Moedas Anomalas Brasil</a>
+    <a href="comprar.html">Como Comprar</a> 
+</ul>
+</nav>  
+<img src="./img/logo.png"></img>
+<i><br><h7>Literatura Numismática</h7></i></br>
+</div>
+</header>
+<body>
+    <center>
+    <table>
+        <tr><th>Título</th><th>Ano da Edição</th><th>Quantidade de Páginas</th><th>Descrição</th></tr>
+        <tr><td>MANUAL PRÁTICO DE IDENTIFICAÇÃO DAS ANOMALIAS ENCONTRADAS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2024</td><td>241 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://example.com/folder/file.pdf" download>Download PDF</a></td></tr>
+        <tr><td>CATALOGO DESCRITIVO PARA CATALOGAR AS MOEDAS CIRCULANTES DO PLANO REAL E SUAS VARIAÇÕES.</td><td>2024</td><td>55 páginas</td><td>Material Descritivo <a href="https://example.com/folder/file.pdf" download>Download PDF</a></td></tr>
+        <tr><td>CATALOGO PARA CATALOGAR MATRIZES DE CUNHO DUPLICADOS, MATRIZES DE CUNHOS TRIPLICADOS, MATRIZES DE QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2024</td><td>50 páginas</td><td>Material descritivo e com várias imagens ilustrativas <a href="https://example.com/folder/file.pdf" download>Download PDF</a></td></tr>
+        <tr><td>CATALOGO DAS MOEDAS COMUNS DO PLANO REAL.</td><td>2024</td><td>53 páginas</td><td>Material descritivo e ilustrativo <a href="https://example.com/folder/file.pdf" download>Download PDF</a></td></tr>
+        <tr><td>COMO COLECIONAR FICHAS: UMA ABORDAGEM HISTÓRICA E CONTEPORÂNEA.</td><td>2024</td><td>207 páginas</td><td>Materila descritivo e com imagens ilustrativas <a href="https://example.com/folder/file.pdf" download>Download PDF</a></td></tr>
+        <tr><td>AS VARIAÇÕES DAS MOEDAS DE COBRE DO BRASIL: COLÔNIA, REINO UNIDO E PERÍODOS IMPERIAIS.</td><td>2024</td><td>113 páginas</td><td>Material descritivo e com imagens ilustrativas <a href="https://example.com/folder/file.pdf" download>Download PDF</a></td></tr>
+    </table>
+    <br>
+    <button onclick="print()">Imprimir Tela</button>
+</center>
+    <br>
+<footer>
+    <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
+</footer>
+</body>
+<script>
+    function downloadEbook() {
+  // Aqui você pode adicionar o código para processar o pagamento e verificar se o pagamento foi bem-sucedido
+  // Depois que o pagamento for processado com sucesso, você pode permitir que o usuário faça o download do livro eletrônico
+  window.location.href = "https://www.example.com/ebook.pdf";
+}
+</script>
+</html>
