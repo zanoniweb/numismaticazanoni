@@ -73,6 +73,20 @@
          #noprint { display:none; } 
          body { background: #fff; }
          }
+         button {
+            background-color: #0074d9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        } 
+         .my-button {
+            background-color: #199319;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+        }
         </style>
 </head>
 <header>
@@ -84,11 +98,13 @@
     
     <nav>
 <ul>
-    <a href="index.html">A história da loja</a>
-    <a href="fichasbrasil.html">Fichas do Brasil</a>
-    <a href="moedasavenda.html">Moedas a Venda Brasil</a>
-    <a href="moedasanomalas.html">Moedas Anômalas Brasil</a>
-    <a href="comprar.html">Como Comprar</a> 
+    <a class="my-button" href="index.html"><button>A história da loja</button></a>
+    <a class="my-button" href="fichasbrasil.html"><button>Fichas do Brasil</button></a>
+    <a class="my-button" href="moedasavenda.html"><button>Moedas a Venda Brasil</button></a>
+    <a class="my-button" href="moedasanomalas.html"><button>Moedas Anômalas Brasil</button></a>
+    <a class="my-button" href="comprar.html"><button>Como Comprar</button></a>
+
+   
 </ul>
 </nav>
 </div>
@@ -118,7 +134,7 @@
         <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,50 COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>116 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/qvbl/" download>EBOOK</a></td></tr>
     </table>
     </section>
-    
+
     <br>
     <button onclick="print()">Imprimir Tela</button>
     <br>
