@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+
     <title>Fichas Brasil</title>
     <style>
         body {
@@ -53,6 +58,21 @@
             text-align: justify;
             font-size: 45px; 
         }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: red;
+        }
+
         footer {
         font-family: Geneva;
         text-align: center;
@@ -86,12 +106,14 @@
 </div>
 </header>
 <body>
+
+  
     
     <center>
 
-    <table>
-
-        <tr><td>Descrição</td><td>Tipo de Máquina</td><td>Preço (Unitário)</td></tr>
+      <table id="tabela1">
+Tipo de Máquina
+        <tr><td><label for="descricao">Descrição</label></td><td><label for="tipoMaquina">Tipo de Máquina</label></td><td><label for="precoUnitario">Preço(unitário)</label></td></tr>
         <tr><td>Basfre</td><td>Sinuca</td><td>R$ 10,00</td></tr>
         <tr><td>Deus é Fiel</td><td>Fliperama</td><td>R$ 10,00</td></tr>
         <tr><td>Formosa</td><td>Sinua</td><td>R$ 10,00</td></tr>
@@ -112,13 +134,46 @@
         <tr><td>Virtual Player</td><td>Fliperama</td><td>R$ 10,00</td></tr>
    
     </table>
-<br>
-    <button onclick="print()">Imprimir Tela</button>
+
     <br>
+
+    <button onclick="print()">Imprimir</button>
+    <button onclick="salvarEmPDF()">Salvar como PDF</button>
+    
+    <br>
+
+
 <footer>
     <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
 </footer>
 </i>
 </center>
 </body>
+
+<script>
+function salvarEmPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const table = document.getElementById("tabela1");
+    
+    // Usando jsPDF-AutoTable para exportar a tabela
+    doc.autoTable({
+        html: '#tabela1',
+        theme: 'grid',
+        styles: {
+            fontSize: 10,
+            textColor: [0, 0, 0],
+            fillColor: [255, 255, 255]
+        },
+        headStyles: {
+            fillColor: [0, 0, 0],
+            textColor: [255, 255, 255]
+        }
+    });
+
+    // Salvar o PDF com nome definido
+    doc.save("tabela.pdf");
+}
+</script>
+
 </html>

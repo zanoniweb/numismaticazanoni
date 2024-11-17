@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
     <title>Moedas a venda Brasil</title>
     <style>
         body {
@@ -63,6 +66,21 @@
          #noprint { display:none; } 
          body { background: #fff; }
          }
+         button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: red;
+        }
+
+
         </style>
 </head>
 <header>
@@ -80,11 +98,13 @@
 </ul>
 </nav>  
 <img src="./img/logo.png"></img>
-<i><br><h9>Moedas a venda Brasil</h9></i></br>
+
 </header>
+
 <body>
     <center>
-    <table>
+        <table id="tabela1">
+        <i><br><h9>Moedas a venda Brasil</h9></i></br>
         <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Preço (unitário)</td></tr>
         <tr><td>R$ 0,01</td><td>1994</td><td>MBC</td><td>R$ 3,50</td></tr>
         <tr><td>R$ 0,01</td><td>1995</td><td>MBC</td><td>R$ 3,50</td></tr>
@@ -125,11 +145,15 @@
         <tr><td>R$ 1,00</td><td>2014</td><td>MBC</td><td>R$ 50,00</td></tr>
         <tr><td>R$ 1,00</td><td>2016</td><td>MBC</td><td>R$ 30,00</td></tr>
     </table>
+
     <br>
     <button onclick="print()">Imprimir Tela</button>
+    <button onclick="salvarTabelaComoPDF('tabela1', 'Moedas do Brasil a Venda')">Salvar Tabela como PDF</button>
    
     <br>
+
     <div class="center">
+
 <footer>
     <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
 </footer>
@@ -139,4 +163,44 @@
 </center>
 </div>
 </body>
+
+<script>
+ function salvarTabelaComoPDF(tabelaId, titulo) {
+    // Obter a tabela pelo ID
+    const tabela = document.getElementById(tabelaId);
+
+    if (!tabela) {
+        alert("Tabela não encontrada!");
+        return;
+    }
+
+    // Criar um novo documento PDF
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Configurar o título
+    doc.setFont("helvetica", "bold");
+    doc.text(titulo, 10, 10);
+
+    // Gerar tabela no PDF
+    doc.autoTable({
+        html: `#${tabelaId}`, // Seleciona a tabela pelo ID
+        startY: 20,           // Posição onde a tabela começa
+        styles: {
+            font: "helvetica",
+            fontSize: 10,
+            textColor: [0, 0, 0], // Cor do texto: preto
+            fillColor: [255, 255, 255], // Cor do fundo: branco (sem preenchimento)
+        },
+        headStyles: {
+            fillColor: [200, 200, 200], // Cor do cabeçalho: cinza claro
+            textColor: [0, 0, 0], // Texto do cabeçalho: preto
+        },
+    });
+
+    // Salvar o arquivo PDF
+    doc.save(`${titulo}.pdf`);
+}
+</script>
+
 </html>
