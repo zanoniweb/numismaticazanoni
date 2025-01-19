@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Numismática Zanoni</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
+    <title>Bilbioteca: Numismática Zanoni</title>
     <link rel="stylesheet"href="index.css">
 <style>
     body {
@@ -112,17 +115,19 @@
 
     <center>
     <section>
-    <table>
+    <table id="tabela1">
         <tr><th>Título</th><th>Ano da Edição</th><th>Quantidade de Páginas</th><th>Descrição</th></tr>
         <tr><td>A INFLUÊNCIA ALEMÃ NA FILATELIA BRASILEIRA: UMA ANÁLISE HISTÓRICA ANTES E DEPOIS DA SEGUNDA GUERRA MUNDIAL.</td><td>2024</td><td>7 páginas</td><td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/fjey/" download>Artigo</a></td></tr> 
         <tr><td>AS VARIAÇÕES DAS MOEDAS DE COBRE DO BRASIL: COLÔNIA, REINO UNIDO E PERÍODOS IMPERIAIS.</td><td>2024</td><td>113 páginas</td><td>Material descritivo e com imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/enbq/" download>EBOOK</a></td></tr>
         <tr><td>CATALOGO DAS MOEDAS COMUNS DO PLANO REAL.</td><td>2024</td><td>54 páginas</td><td>Material Descritivo <a href="https://online.fliphtml5.com/lusnq/zxjk/" download>EBOOK</a></td></tr>
-        <tr><td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, MATRIZES DE CUNHOS TRIPLICADOS, MATRIZES DE CUNHOS QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2024</td><td>217 páginas</td><td>Material descritivo e com várias imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/qtft/" download>EBOOK</a></td></tr>        
+        <tr><td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, MATRIZES DE CUNHOS TRIPLICADOS, MATRIZES DE CUNHOS QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2024</td><td>217 páginas</td><td>Material descritivo e com várias imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/qtft/" download>EBOOK</a></td></tr>            
+        <tr><td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, MATRIZES DE CUNHOS TRIPLICADOS, MATRIZES DE CUNHOS QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2025</td><td>227 páginas</td><td>Material descritivo e com várias imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/iezr/" download>EBOOK</a></td></tr>
         <tr><td>COMO COLECIONAR FICHAS: UMA ABORDAGEM HISTÓRICA E CONTEPORÂNEA.</td><td>2024</td><td>207 páginas</td><td>Materila descritivo e com imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/ylra/" download>EBOOK</a></td></tr>
         <tr><td>ESTUDO NUMISMÁTICO DAS ANOMALIAS ENCONTRADAS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2024</td><td>242 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/rizy/" download>EBOOK</a></td></tr>
-        <tr><td>No ano em que o Plano Real completa 30 anos: a moeda de R$ 0,50 ano 1994 que é o exemplar mais falsificado do Plano Real ainda está em circulação.</td><td>2024</td><td>16 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/gzsv/" download>Artigo</a></td></tr>
+        <tr><td>NO ANO EM QUE O PLANO REAL COMPLETA 30 ANOS: A MOEDA DE R$ 0,50 ANO 1994 É O EXEMPLAR MAIS FALSIFICADO DO PALNO REAL AINDA ESTÁ EM CRICULAÇÃO.</td><td>2024</td><td>16 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/gzsv/" download>Artigo</a></td></tr>
+        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE MOEDAS DE COBRE DO BRASIL IMPERIAL.</td><td>2025</td><td>226 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/ntnd/" download>EBOOK</a></td></tr>
         <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,05 COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>185 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/ofeq/" download>EBOOK</a></td></tr>
-        <tr><td>Versão ilustrada da coleção numismática Zanoni com os exemplares de moedas de R$ 0,05 com excesso de metal.</td><td>2024</td><td>14 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/rwwh/" download>EBOOK</a></td></tr>
+        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,05 COM EXECESSO DE METAL.</td><td>2024</td><td>14 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/rwwh/" download>EBOOK</a></td></tr>
         <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,10 DA 1ª FAMÍLIA DO PLANO REAL COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>85 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/uhtw/" download>EBOOK</a></td></tr>
         <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,10 DA 2ª FAMÍLIA DO PLANO REAL COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>194 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/dmqv/" download>EBOOK</a></td></tr>
         <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,50 COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>116 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/qvbl/" download>EBOOK</a></td></tr>
@@ -131,8 +136,10 @@
     </section>
 
     <br>
-    <button onclick="print()">Imprimir</button>
+    <button onclick="print()">Imprimir Tela</button>
+    <button onclick="salvarTabelaComoPDF('tabela1', 'Literatura Filatélica & Numismática.')">Salvar Tabela como PDF</button>
     <br>
+
 <footer>
     <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
 </footer>
@@ -141,4 +148,44 @@
 
 </center>
 </body>
+
+<script>
+    function salvarTabelaComoPDF(tabelaId, titulo) {
+       // Obter a tabela pelo ID
+       const tabela = document.getElementById(tabelaId);
+   
+       if (!tabela) {
+           alert("Tabela não encontrada!");
+           return;
+       }
+   
+       // Criar um novo documento PDF
+       const { jsPDF } = window.jspdf;
+       const doc = new jsPDF();
+   
+       // Configurar o título
+       doc.setFont("helvetica", "bold");
+       doc.text(titulo, 10, 10);
+   
+       // Gerar tabela no PDF
+       doc.autoTable({
+           html: `#${tabelaId}`, // Seleciona a tabela pelo ID
+           startY: 20,           // Posição onde a tabela começa
+           styles: {
+               font: "helvetica",
+               fontSize: 10,
+               textColor: [0, 0, 0], // Cor do texto: preto
+               fillColor: [255, 255, 255], // Cor do fundo: branco (sem preenchimento)
+           },
+           headStyles: {
+               fillColor: [200, 200, 200], // Cor do cabeçalho: cinza claro
+               textColor: [0, 0, 0], // Texto do cabeçalho: preto
+           },
+       });
+   
+       // Salvar o arquivo PDF
+       doc.save(`${titulo}.pdf`);
+   }
+   </script>
+
 </html>
