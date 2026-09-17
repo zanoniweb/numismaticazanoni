@@ -1,197 +1,372 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca: Numismática Zanoni</title>
+    
+    <!-- Scripts jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
-    <title>Bilbioteca: Numismática Zanoni</title>
-    <link rel="stylesheet"href="index.css">
-<style>
-    body {
-        color: white;
-        background-color: black;
-        font-family: Geneva;
-        align-items: center;
-    }
-    ul {
-        display: flex;
-        justify-content: space-between;
-        font-size: 25px;
-        list-style-type: nome;
-        padding: 16px;
-    }
-    a {
-        color: blue;
-        text-decoration: nome;
-    }
-    a:active { 
-        color: red;
-    }    
-    header img {
-        width: 300px;
-        height: 200px;
-        border: 5px solid goldenrod;
-    }
-    section {
-        color: white;
-        font-family: Geneva;
-        font-size: 30px; 
-    }
-    p {
-        color: white;
-        font-family: Geneva;
-        font-size: 30px; 
-    }
-    .center {
-        text-align: center;
-    }
-    h7 {
-        color: white;
-        font-family: Geneva;
-        text-align: center;
-        font-size: 45px; 
-    }
-    .container {
-        padding: 0px 35px;
-    }
-    nav a:hover {
-        color: blue;
-    }
-    table, th, td {
-        border: 1px solid white;
-        border-radius: 10px;
-        font-family: Geneva;
-        font-size: 15px; 
-        color: white;
-        text-align: center;
-        align-items: center;
-    }
+    <link rel="stylesheet" href="index.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    button {
-            margin: 5px;
-            padding: 10px 20px;
+        body {
+            color: #ffffff;
+            background-color: #000000;
+            font-family: Geneva, Tahoma, Verdana, sans-serif;
+            line-height: 1.5;
+            padding: 15px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Menu Responsivo */
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            list-style: none;
+            padding: 15px 0;
+        }
+
+        nav a {
+            color: #4d94ff;
+            text-decoration: none;
+            font-size: 1rem;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover, nav a:active {
+            color: #ffffff;
+        }
+
+        /* Topo e Imagens */
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header img.logo {
+            max-width: 100%;
+            width: 280px;
+            height: auto;
+            border: 4px solid goldenrod;
+            margin: 15px 0;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            margin: 15px 0;
+            line-height: 1.3;
+        }
+
+        /* Container da Tabela com Rolagem Horizontal para Mobile */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            color: #ffffff;
+            text-align: left;
+            min-width: 600px; /* Garante estrutura legível no celular */
+        }
+
+        th, td {
+            border: 1px solid #555555;
+            padding: 12px 10px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #1a1a1a;
+            color: goldenrod;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        td a {
+            color: #4d94ff;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        /* Botões */
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
-            background-color: white;
-            color: black;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 1rem;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         button:hover {
-            background-color: red;
+            background-color: #ff3333;
+            color: #ffffff;
         }
 
+        /* Rodapé */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #333333;
+        }
 
-</style>
+        footer p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 0.95rem;
+        }
 
+        footer img {
+            max-width: 140px;
+            height: auto;
+        }
+    </style>
 </head>
-<header>
-
-    <i>
-
-    <div class="center">
-   <nav>
-        <ul>
-                <a href="index.html">A história da loja</a>
-                <a href="fichasbrasil.html">Fichas do Brasil</a>
-                <a href="moedasavenda.html">Moedas a Venda Brasil</a>
-                <a href="moedasanomalas.html">Moedas Anômalas Brasil</a>
-                <a href="comprar.html">Como Comprar</a> 
-
-</ul>
-</nav>
-
-
-<div class="center"> 
-<img src="./img/logo.png"></img>
-<br><h7>Literatura Filatélica & Numismática (Material de Consulta Gratuito).</h7></br>
-
-</div>
-</div>
-</header>
 <body>
 
-    <center>
-    <section>
-    <table id="tabela1">
-        <tr><th>Título</th><th>Ano da Edição</th><th>Quantidade de Páginas</th><th>Descrição</th></tr>
-        <tr><td>A INFLUÊNCIA ALEMÃ NA FILATELIA BRASILEIRA: UMA ANÁLISE HISTÓRICA ANTES E DEPOIS DA SEGUNDA GUERRA MUNDIAL.</td><td>2024</td><td>7 páginas</td><td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/fjey/" download>Artigo</a></td></tr> 
-        <tr><td>AS VARIAÇÕES DAS MOEDAS DE COBRE DO BRASIL: COLÔNIA, REINO UNIDO E PERÍODOS IMPERIAIS.</td><td>2024</td><td>113 páginas</td><td>Material descritivo e com imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/enbq/" download>EBOOK</a></td></tr>
-        <tr><td>CATALOGO DAS MOEDAS COMUNS DO PLANO REAL.</td><td>2024</td><td>54 páginas</td><td>Material Descritivo <a href="https://online.fliphtml5.com/lusnq/zxjk/" download>EBOOK</a></td></tr>
-        <tr><td>CATALOGO DAS MOEDAS COMUNS DO PLANO REAL.</td><td>2025</td><td>54 páginas</td><td>Material Descritivo <a href="https://online.fliphtml5.com/lusnq/btwo/" download>EBOOK</a></td></tr>
-        <tr><td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, MATRIZES DE CUNHOS TRIPLICADOS, MATRIZES DE CUNHOS QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2024</td><td>217 páginas</td><td>Material descritivo e com várias imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/qtft/" download>EBOOK</a></td></tr>            
-        <tr><td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, MATRIZES DE CUNHOS TRIPLICADOS, MATRIZES DE CUNHOS QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2025</td><td>227 páginas</td><td>Material descritivo e com várias imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/iezr/" download>EBOOK</a></td></tr>
-        <tr><td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, MATRIZES DE CUNHOS TRIPLICADOS, MATRIZES DE CUNHOS QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2026</td><td>227 páginas</td><td>Material descritivo e com várias imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/nfvx/" download>EBOOK</a></td></tr>
-        <tr><td>COLEÇÃO NUMISMÁTICA ZANONI: CÉDULAS DE OCUPAÇÃO JAPONESA DURANTE A SEGUNDA GUERRA MUNDIAL EM UM BREVE ESTUDO NUMISMÁTICO.</td><td>2026</td><td>28 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/hyeo/" download>EBOOK</a></td></tr>
-        <tr><td>COLEÇÃO DE BILHETES POSTAIS E CARTAS BILHETES DE JULIANO ZANONI DO BRASIL IMPERIAL ATÉ A REPÚBNLICA VELHA: NOVOS E USADOS E OBSERVA-SE QUE O MATERIAL MANUSCRITO A PENA FOI ANALISADO COM INTELIGÊNCIA ARTIFICIAL.</td><td>2026</td><td>70 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/hyeo/" download>EBOOK</a></td></tr>
-        <tr><td>COMO COLECIONAR FICHAS: UMA ABORDAGEM HISTÓRICA E CONTEPORÂNEA.</td><td>2024</td><td>207 páginas</td><td>Materila descritivo e com imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/ylra/" download>EBOOK</a></td></tr>
-        <tr><td>ESTUDO NUMISMÁTICO DAS ANOMALIAS ENCONTRADAS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td><td>2024</td><td>242 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/rizy/" download>EBOOK</a></td></tr>
-        <tr><td>Manual descritivo para catalogar as moedas circulantes do Plano Real: bonés, cunhos entupidos, cunhos enrugados, cunhos gastos, cunhos marcados, cunhos quebrados, cunhos trincados, final de chapa, moedas falsas, reversos horizontais, reversos inclinados e reversos invertidos.</td><td>2026</td><td>76 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href=" " download>EBOOK</a></td></tr>
-        <tr><td>NO ANO EM QUE O PLANO REAL COMPLETA 30 ANOS: A MOEDA DE R$ 0,50 ANO 1994 É O EXEMPLAR MAIS FALSIFICADO DO PALNO REAL AINDA ESTÁ EM CRICULAÇÃO.</td><td>2024</td><td>16 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/gzsv/" download>Artigo</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE MOEDAS DE COBRE DO BRASIL IMPERIAL.</td><td>2025</td><td>226 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/ntnd/" download>EBOOK</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,05 COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>185 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/ofeq/" download>EBOOK</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,05 COM EXECESSO DE METAL.</td><td>2024</td><td>14 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/rwwh/" download>EBOOK</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,05 COM EXECESSO DE METAL.</td><td>2025</td><td>18 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/iluf/" download>EBOOK</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,10 DA 1ª FAMÍLIA DO PLANO REAL COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>85 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/uhtw/" download>EBOOK</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,10 DA 2ª FAMÍLIA DO PLANO REAL COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>194 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/dmqv/" download>EBOOK</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 0,50 COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>116 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/qvbl/" download>EBOOK</a></td></tr>
-        <tr><td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE R$ 1,00 COM DETALHES EM DUPLICIDADE.</td><td>2024</td><td>68 páginas</td><td>Material descritivo e ilustrativo com imagens coloridas <a href="https://online.fliphtml5.com/lusnq/widy/" download>EBOOK</a></td></tr>
-    </table>
-    </section>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">A história da loja</a></li>
+                    <li><a href="fichasbrasil.html">Fichas do Brasil</a></li>
+                    <li><a href="moedasavenda.html">Moedas à Venda Brasil</a></li>
+                    <li><a href="moedasanomalas.html">Moedas Anômalas Brasil</a></li>
+                    <li><a href="comprar.html">Como Comprar</a></li>
+                </ul>
+            </nav>
 
-    <br>
-    <button onclick="print()">Imprimir Tela</button>
-    <button onclick="salvarTabelaComoPDF('tabela1', 'Literatura Filatélica & Numismática.')">Salvar Tabela como PDF</button>
-    <br>
+            <img src="./img/logo.png" alt="Logo Numismática Zanoni" class="logo">
+            <h1>Literatura Filatélica & Numismática (Material de Consulta Gratuito)</h1>
+        </header>
 
-<footer>
-    <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
-</footer>
+        <main>
+            <section class="table-responsive">
+                <table id="tabela1">
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Ano</th>
+                            <th>Páginas</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>A INFLUÊNCIA ALEMÃ NA FILATELIA BRASILEIRA: UMA ANÁLISE HISTÓRICA ANTES E DEPOIS DA SEGUNDA GUERRA MUNDIAL.</td>
+                            <td>2024</td>
+                            <td>7 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/fjey/" target="_blank" download>Artigo</a></td>
+                        </tr>
+                        <tr>
+                            <td>AS VARIAÇÕES DAS MOEDAS DE COBRE DO BRASIL: COLÔNIA, REINO UNIDO E PERÍODOS IMPERIAIS.</td>
+                            <td>2024</td>
+                            <td>113 págs</td>
+                            <td>Material descritivo e com imagens ilustrativas <a href="https://online.fliphtml5.com/lusnq/enbq/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>CATALOGO DAS MOEDAS COMUNS DO PLANO REAL.</td>
+                            <td>2024</td>
+                            <td>54 págs</td>
+                            <td>Material Descritivo <a href="https://online.fliphtml5.com/lusnq/zxjk/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>CATALOGO DAS MOEDAS COMUNS DO PLANO REAL.</td>
+                            <td>2025</td>
+                            <td>54 págs</td>
+                            <td>Material Descritivo <a href="https://online.fliphtml5.com/lusnq/btwo/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, TRIPLICADOS, QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td>
+                            <td>2024</td>
+                            <td>217 págs</td>
+                            <td>Material descritivo e com várias imagens <a href="https://online.fliphtml5.com/lusnq/qtft/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, TRIPLICADOS, QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td>
+                            <td>2025</td>
+                            <td>227 págs</td>
+                            <td>Material descritivo e com várias imagens <a href="https://online.fliphtml5.com/lusnq/iezr/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>CATÁLOGO PARA MATRIZES DE CUNHOS DUPLICADOS, TRIPLICADOS, QUADRUPLICADOS E CUNHOS DUPLOS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td>
+                            <td>2026</td>
+                            <td>227 págs</td>
+                            <td>Material descritivo e com várias imagens <a href="https://online.fliphtml5.com/lusnq/nfvx/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>COLEÇÃO NUMISMÁTICA ZANONI: CÉDULAS DE OCUPAÇÃO JAPONESA DURANTE A SEGUNDA GUERRA MUNDIAL.</td>
+                            <td>2026</td>
+                            <td>28 págs</td>
+                            <td>Material descritivo e ilustrativo coloridas <a href="https://online.fliphtml5.com/lusnq/hyeo/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>COLEÇÃO DE BILHETES POSTAIS E CARTAS BILHETES DE JULIANO ZANONI DO BRASIL IMPERIAL ATÉ A REPÚBLICA VELHA.</td>
+                            <td>2026</td>
+                            <td>70 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/hyeo/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>COMO COLECIONAR FICHAS: UMA ABORDAGEM HISTÓRICA E CONTEMPORÂNEA.</td>
+                            <td>2024</td>
+                            <td>207 págs</td>
+                            <td>Material descritivo e com imagens <a href="https://online.fliphtml5.com/lusnq/ylra/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>ESTUDO NUMISMÁTICO DAS ANOMALIAS ENCONTRADAS NAS MOEDAS CIRCULANTES DO PLANO REAL.</td>
+                            <td>2024</td>
+                            <td>242 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/rizy/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>MANUAL DESCRITIVO PARA CATALOGAR AS MOEDAS CIRCULANTES DO PLANO REAL.</td>
+                            <td>2026</td>
+                            <td>76 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="#" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>A MOEDA DE R$ 0,50 ANO 1994 É O EXEMPLAR MAIS FALSIFICADO DO PLANO REAL AINDA EM CIRCULAÇÃO.</td>
+                            <td>2024</td>
+                            <td>16 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/gzsv/" target="_blank" download>Artigo</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI COM OS EXEMPLARES DE MOEDAS DE COBRE DO BRASIL IMPERIAL.</td>
+                            <td>2025</td>
+                            <td>226 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/ntnd/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI - R$ 0,05 COM DETALHES EM DUPLICIDADE.</td>
+                            <td>2024</td>
+                            <td>185 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/ofeq/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI - R$ 0,05 COM EXCESSO DE METAL.</td>
+                            <td>2024</td>
+                            <td>14 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/rwwh/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI - R$ 0,05 COM EXCESSO DE METAL.</td>
+                            <td>2025</td>
+                            <td>18 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/iluf/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI - R$ 0,10 DA 1ª FAMÍLIA COM DUPLICIDADE.</td>
+                            <td>2024</td>
+                            <td>85 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/uhtw/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI - R$ 0,10 DA 2ª FAMÍLIA COM DUPLICIDADE.</td>
+                            <td>2024</td>
+                            <td>194 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/dmqv/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI - R$ 0,50 COM DETALHES EM DUPLICIDADE.</td>
+                            <td>2024</td>
+                            <td>116 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/qvbl/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                        <tr>
+                            <td>VERSÃO ILUSTRADA DA COLEÇÃO NUMISMÁTICA ZANONI - R$ 1,00 COM DETALHES EM DUPLICIDADE.</td>
+                            <td>2024</td>
+                            <td>68 págs</td>
+                            <td>Material descritivo e ilustrativo <a href="https://online.fliphtml5.com/lusnq/widy/" target="_blank" download>EBOOK</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
 
-</i>
+            <div class="actions">
+                <button onclick="window.print()">Imprimir Tela</button>
+                <button onclick="salvarTabelaComoPDF('tabela1', 'Literatura Filatélica e Numismática')">Salvar Tabela como PDF</button>
+            </div>
+        </main>
 
-</center>
+        <footer>
+            <p>Site desenvolvido por Juliano 
+                <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni">
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function salvarTabelaComoPDF(tabelaId, titulo) {
+            const tabela = document.getElementById(tabelaId);
+            if (!tabela) {
+                alert("Tabela não encontrada!");
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text(titulo, 14, 15);
+
+            doc.autoTable({
+                html: `#${tabelaId}`,
+                startY: 22,
+                styles: {
+                    font: "helvetica",
+                    fontSize: 8,
+                    textColor: [0, 0, 0],
+                    fillColor: [255, 255, 255],
+                },
+                headStyles: {
+                    fillColor: [200, 200, 200],
+                    textColor: [0, 0, 0],
+                    fontStyle: 'bold'
+                },
+            });
+
+            doc.save(`${titulo}.pdf`);
+        }
+    </script>
 </body>
-
-<script>
-    function salvarTabelaComoPDF(tabelaId, titulo) {
-       // Obter a tabela pelo ID
-       const tabela = document.getElementById(tabelaId);
-   
-       if (!tabela) {
-           alert("Tabela não encontrada!");
-           return;
-       }
-   
-       // Criar um novo documento PDF
-       const { jsPDF } = window.jspdf;
-       const doc = new jsPDF();
-   
-       // Configurar o título
-       doc.setFont("helvetica", "bold");
-       doc.text(titulo, 10, 10);
-   
-       // Gerar tabela no PDF
-       doc.autoTable({
-           html: `#${tabelaId}`, // Seleciona a tabela pelo ID
-           startY: 20,           // Posição onde a tabela começa
-           styles: {
-               font: "helvetica",
-               fontSize: 10,
-               textColor: [0, 0, 0], // Cor do texto: preto
-               fillColor: [255, 255, 255], // Cor do fundo: branco (sem preenchimento)
-           },
-           headStyles: {
-               fillColor: [200, 200, 200], // Cor do cabeçalho: cinza claro
-               textColor: [0, 0, 0], // Texto do cabeçalho: preto
-           },
-       });
-   
-       // Salvar o arquivo PDF
-       doc.save(`${titulo}.pdf`);
-   }
-   </script>
-
 </html>

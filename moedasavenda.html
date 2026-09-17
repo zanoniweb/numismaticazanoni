@@ -1,217 +1,303 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moedas a Venda Brasil</title>
+    
+    <!-- Bibliotecas jsPDF e AutoTable -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
-    <title>Moedas a venda Brasil</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            color: white;
-            background-color: black;
+            color: #ffffff;
+            background-color: #000000;
             font-family: sans-serif;
-            align-items: center;
+            line-height: 1.5;
+            padding: 15px;
         }
-        ul {
-            display: flex;
-            justify-content: space-between;
-            list-style-type: nome;
-            align-items: center;
-            padding: 16 px;
-            font-size: 30px;
-        }
-        a {
-            color: blue;
-            text-decoration: nome;
-        }
-        a:active { 
-            color: red;
-        }    
-        header img {
-            width: 300px;
-            height: 200px;
-            border: 5px solid goldenrod;
-        }
-        table, th, td {
-            border: 1px solid white;
-            border-radius: 10px;
-            font-family: Geneva;
-            font-size: 15px; 
-            color: white;
-            text-align: center;
-        }
-        .center {
-            text-align: center;
-        }
-        h9 {
-            color: red;
-            font-family: Geneva;
-            text-align: justify;
-            font-size: 45px; 
-        }
-        .section {
-            color: white;
-            font-family: sans-serif;
-            font-size: 30px; 
-        }
+
         .container {
-            padding: 0px 35px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
         }
-        nav a:hover {
-            color: blue;
+
+        /* Cabeçalho e Navegação */
+        header {
+            text-align: center;
+            margin-bottom: 25px;
         }
-        @media print { 
-         #noprint { display:none; } 
-         body { background: #fff; }
-         }
-         button {
-            margin: 5px;
-            padding: 10px 20px;
+
+        nav ul {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            list-style: none;
+            padding: 15px 0;
+        }
+
+        nav a {
+            color: #4d94ff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover, nav a:active {
+            color: #ff4d4d;
+        }
+
+        header img.logo {
+            max-width: 100%;
+            width: 280px;
+            height: auto;
+            border: 4px solid goldenrod;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        h1 {
+            color: red;
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin: 20px 0 15px 0;
+        }
+
+        /* Container da Tabela (Permite rolagem no mobile) */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            color: #ffffff;
+            text-align: center;
+            min-width: 500px; /* Garante boa leitura mesmo em telas muito pequenas */
+        }
+
+        th, td {
+            border: 1px solid #ffffff;
+            padding: 10px 8px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #1a1a1a;
+            color: goldenrod;
+            font-weight: bold;
+        }
+
+        /* Botões de Ação */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        button {
+            padding: 12px 20px;
             border: none;
             border-radius: 5px;
-            background-color: white;
-            color: black;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 0.95rem;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         button:hover {
             background-color: red;
+            color: #ffffff;
         }
 
+        /* Rodapé */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333333;
+            font-size: 0.95rem;
+        }
 
-        </style>
+        footer p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        footer img {
+            max-width: 140px;
+            height: auto;
+        }
+
+        /* Estilos de Impressão */
+        @media print {
+            .btn-group, nav { 
+                display: none !important; 
+            } 
+            body { 
+                background: #ffffff; 
+                color: #000000; 
+            }
+            table, th, td {
+                color: #000000;
+                border-color: #000000;
+            }
+            .table-container {
+                border: none;
+                overflow: visible;
+            }
+        }
+    </style>
 </head>
-<header>
-
-    <i>
-
-    <div class="center">
-    <nav>
-<ul>
-    <a href="index.html">A história da loja</a>
-    <a href="fichasbrasil.html">Fichas do Brasil</a>
-    <a href="biblioteca.html">Literatura Filatélica & Numismática</a>
-    <a href="moedasanomalas.html">Moedas Anômalas Brasil</a>
-    <a href="comprar.html">Como Comprar</a> 
-</ul>
-</nav>  
-<img src="./img/logo.png"></img>
-
-</header>
-
 <body>
-    <center>
-        <table id="tabela1">
-        <i><br><h9>Moedas a venda Brasil</h9></i></br>
-        <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Preço (unitário)</td></tr>
-        <tr><td>R$ 0,01</td><td>1994</td><td>MBC</td><td>R$ 3,50</td></tr>
-        <tr><td>R$ 0,01</td><td>1995</td><td>MBC</td><td>R$ 3,50</td></tr>
-        <tr><td>R$ 0,01</td><td>1996</td><td>MBC</td><td>R$ 3,50</td></tr>
-        <tr><td>R$ 0,01</td><td>1997</td><td>MBC</td><td>R$ 3,50</td></tr>
-        <tr><td>R$ 0,01</td><td>2000</td><td>MBC</td><td>R$ 30,00</td></tr>
-        <tr><td>R$ 0,01</td><td>2001</td><td>MBC</td><td>R$ 7,00</td></tr>
-        <tr><td>R$ 0,01</td><td>2003</td><td>MBC</td><td>R$ 7,00</td></tr>
-        <tr><td>R$ 0,01</td><td>2004</td><td>MBC</td><td>R$ 7,00</td></tr>
-        <tr><td>R$ 0,05</td><td>1995</td><td>MBC</td><td>R$ 10,00</td></tr>
-        <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>R$ 20,00</td></tr>
-        <tr><td>R$ 0,05</td><td>1998</td><td>MBC</td><td>R$ 7,00</td></tr>
-        <tr><td>R$ 0,05</td><td>1999</td><td>MBC</td><td>R$ 70,00</td></tr>
-        <tr><td>R$ 0,05</td><td>2000</td><td>MBC</td><td>R$ 50,00</td></tr>
-        <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>R$ 25,00</td></tr>
-        <tr><td>R$ 0,05</td><td>2008</td><td>MBC</td><td>R$ 50,00</td></tr>
-        <tr><td>R$ 0,05</td><td>2014</td><td>MBC</td><td>R$ 6,00</td></tr>
-        <tr><td>R$ 0,05</td><td>2019</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 0,05</td><td>2019A</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 0,10</td><td>1998</td><td>MBC</td><td>R$ 7,00</td></tr>
-        <tr><td>R$ 0,10</td><td>1999</td><td>MBC</td><td>R$ 80,00</td></tr>
-        <tr><td>R$ 0,10</td><td>2000</td><td>MBC</td><td>R$ 50,00</td></tr>
-        <tr><td>R$ 0,10</td><td>2001</td><td>MBC</td><td>R$ 7,00</td></tr>
-        <tr><td>R$ 0,10</td><td>2002</td><td>MBC</td><td>R$ 6,00</td></tr>
-        <tr><td>R$ 0,25</td><td>1995</td><td>MBC</td><td>R$ 12,50</td></tr>
-        <tr><td>R$ 0,25</td><td>1998</td><td>MBC</td><td>R$ 7,00</td></tr>
-        <tr><td>R$ 0,25</td><td>1999</td><td>MBC</td><td>R$ 40,00</td></tr>
-        <tr><td>R$ 0,25</td><td>2000</td><td>MBC</td><td>R$ 60,00</td></tr>
-        <tr><td>R$ 0,25</td><td>2014</td><td>MBC</td><td>R$ 30,00</td></tr>
-        <tr><td>R$ 0,25</td><td>2016</td><td>MBC</td><td>R$ 50,00</td></tr>
-        <tr><td>R$ 0,50</td><td>1995</td><td>MBC</td><td>R$ 20,00</td></tr>
-        <tr><td>R$ 0,50</td><td>1998</td><td>MBC</td><td>R$ 30,00</td></tr>
-        <tr><td>R$ 0,50</td><td>2000</td><td>MBC</td><td>R$ 40,00</td></tr>
-        <tr><td>R$ 0,50</td><td>2001</td><td>MBC</td><td>R$ 40,00</td></tr>
-        <tr><td>R$ 0,50</td><td>2006</td><td>MBC</td><td>R$ 50,00</td></tr>
-        <tr><td>R$ 1,00</td><td>1998</td><td>MBC</td><td>R$ 40,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2014</td><td>MBC</td><td>R$ 50,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2016</td><td>MBC</td><td>R$ 30,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2002 (JK)</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2005 (BC)</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2015 (BC)</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2014 (NATAÇÃO)</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2015 (PARACANOAGEM)</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2015 (VOLEI)</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2016 (BOXE)</td><td>MBC</td><td>R$ 5,00</td></tr>
-        <tr><td>R$ 1,00</td><td>2019 (BEIJA FLOR)</td><td>MBC</td><td>R$ 5,00</td></tr>
-    </table>
 
-    <!--
-    <tr><td>R$ 1,00</td><td> ()</td><td>MBC</td><td>R$ </td></tr>
-    -->
-    <br>
-    <button onclick="print()">Imprimir Tela</button>
-    <button onclick="salvarTabelaComoPDF('tabela1', 'Moedas do Brasil a Venda')">Salvar Tabela como PDF</button>
-   
-    <br>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">A história da loja</a></li>
+                    <li><a href="fichasbrasil.html">Fichas do Brasil</a></li>
+                    <li><a href="biblioteca.html">Literatura Filatélica & Numismática</a></li>
+                    <li><a href="moedasanomalas.html">Moedas Anômalas Brasil</a></li>
+                    <li><a href="comprar.html">Como Comprar</a></li>
+                </ul>
+            </nav>  
+            <img src="./img/logo.png" alt="Logo Zanoni Numismática" class="logo">
+        </header>
 
-    <div class="center">
+        <main>
+            <h1>Moedas a Venda Brasil</h1>
 
-<footer>
-    <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
-</footer>
+            <div class="table-container">
+                <table id="tabela1">
+                    <thead>
+                        <tr>
+                            <th>Valor Facial</th>
+                            <th>Ano</th>
+                            <th>Conservação</th>
+                            <th>Preço (unitário)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,01</td><td>1994</td><td>MBC</td><td>R$ 3,50</td></tr>
+                        <tr><td>R$ 0,01</td><td>1995</td><td>MBC</td><td>R$ 3,50</td></tr>
+                        <tr><td>R$ 0,01</td><td>1996</td><td>MBC</td><td>R$ 3,50</td></tr>
+                        <tr><td>R$ 0,01</td><td>1997</td><td>MBC</td><td>R$ 3,50</td></tr>
+                        <tr><td>R$ 0,01</td><td>2000</td><td>MBC</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,01</td><td>2001</td><td>MBC</td><td>R$ 7,00</td></tr>
+                        <tr><td>R$ 0,01</td><td>2003</td><td>MBC</td><td>R$ 7,00</td></tr>
+                        <tr><td>R$ 0,01</td><td>2004</td><td>MBC</td><td>R$ 7,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1995</td><td>MBC</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1998</td><td>MBC</td><td>R$ 7,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1999</td><td>MBC</td><td>R$ 70,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2000</td><td>MBC</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2008</td><td>MBC</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2014</td><td>MBC</td><td>R$ 6,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2019</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2019A</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1998</td><td>MBC</td><td>R$ 7,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1999</td><td>MBC</td><td>R$ 80,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2000</td><td>MBC</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2001</td><td>MBC</td><td>R$ 7,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2002</td><td>MBC</td><td>R$ 6,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>1995</td><td>MBC</td><td>R$ 12,50</td></tr>
+                        <tr><td>R$ 0,25</td><td>1998</td><td>MBC</td><td>R$ 7,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>1999</td><td>MBC</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2000</td><td>MBC</td><td>R$ 60,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2014</td><td>MBC</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2016</td><td>MBC</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>1995</td><td>MBC</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>1998</td><td>MBC</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2000</td><td>MBC</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2001</td><td>MBC</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2006</td><td>MBC</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>1998</td><td>MBC</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2014</td><td>MBC</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2016</td><td>MBC</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2002 (JK)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2005 (BC)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2015 (BC)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2014 (NATAÇÃO)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2015 (PARACANOAGEM)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2015 (VOLEI)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2016 (BOXE)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2019 (BEIJA FLOR)</td><td>MBC</td><td>R$ 5,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-</i>
+            <div class="btn-group">
+                <button onclick="window.print()">Imprimir Tela</button>
+                <button onclick="salvarTabelaComoPDF('tabela1', 'Moedas_do_Brasil_a_Venda')">Salvar Tabela como PDF</button>
+            </div>
+        </main>
 
-</center>
-</div>
+        <footer>
+            <p>Site desenvolvido por Juliano 
+                <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni">
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function salvarTabelaComoPDF(tabelaId, titulo) {
+            const tabela = document.getElementById(tabelaId);
+
+            if (!tabela) {
+                alert("Tabela não encontrada!");
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text(titulo.replace(/_/g, ' '), 14, 15);
+
+            doc.autoTable({
+                html: `#${tabelaId}`,
+                startY: 22,
+                styles: {
+                    font: "helvetica",
+                    fontSize: 10,
+                    textColor: [0, 0, 0],
+                    fillColor: [255, 255, 255]
+                },
+                headStyles: {
+                    fillColor: [200, 200, 200],
+                    textColor: [0, 0, 0],
+                    fontStyle: 'bold'
+                }
+            });
+
+            doc.save(`${titulo}.pdf`);
+        }
+    </script>
 </body>
-
-<script>
- function salvarTabelaComoPDF(tabelaId, titulo) {
-    // Obter a tabela pelo ID
-    const tabela = document.getElementById(tabelaId);
-
-    if (!tabela) {
-        alert("Tabela não encontrada!");
-        return;
-    }
-
-    // Criar um novo documento PDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    // Configurar o título
-    doc.setFont("helvetica", "bold");
-    doc.text(titulo, 10, 10);
-
-    // Gerar tabela no PDF
-    doc.autoTable({
-        html: `#${tabelaId}`, // Seleciona a tabela pelo ID
-        startY: 20,           // Posição onde a tabela começa
-        styles: {
-            font: "helvetica",
-            fontSize: 10,
-            textColor: [0, 0, 0], // Cor do texto: preto
-            fillColor: [255, 255, 255], // Cor do fundo: branco (sem preenchimento)
-        },
-        headStyles: {
-            fillColor: [200, 200, 200], // Cor do cabeçalho: cinza claro
-            textColor: [0, 0, 0], // Texto do cabeçalho: preto
-        },
-    });
-
-    // Salvar o arquivo PDF
-    doc.save(`${titulo}.pdf`);
-}
-</script>
-
 </html>

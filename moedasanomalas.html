@@ -1,543 +1,509 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bibliotecas jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 
-
-    <title>Moedas Anomalas Brasil</title>
+    <title>Moedas Anômalas Brasil</title>
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            color: white;
-            background-color: black;
+            color: #ffffff;
+            background-color: #000000;
             font-family: sans-serif;
-            align-items: center;
+            line-height: 1.5;
+            padding: 15px;
         }
-        ul {
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Header e Navegação */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        nav ul {
             display: flex;
-            justify-content: space-between;
-            list-style-type: nome;
-            align-items: center;
-            padding: 16px;
-            font-size: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            list-style: none;
+            padding: 15px 0;
         }
-        a {
-            color: blue;
-            text-decoration: nome;
+
+        nav a {
+            color: #4d94ff;
+            text-decoration: none;
+            font-size: 1rem;
+            text-align: center;
+            transition: color 0.3s ease;
         }
-        a:active { 
+
+        nav a:hover, nav a:active {
+            color: #ffffff;
+        }
+
+        header img.logo {
+            max-width: 100%;
+            width: 280px;
+            height: auto;
+            border: 4px solid goldenrod;
+            margin: 15px 0;
+        }
+
+        h1 {
             color: red;
-        } 
-        nav a:hover {
-            color: blue;
-        }   
-        header img {
-            width: 300px;
-            height: 200px;
-            border: 5px solid goldenrod;
-        }
-        table, th, td {
-            border: 1px solid white;
-            border-radius: 10px;
-            font-family: Geneva;
-            font-size: 15px; 
-            color: white;
             text-align: center;
-            align-items: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin: 10px 0 20px 0;
         }
-        .center {
-            text-align: center;
-            align-items: center;
-        }
-        h10 {
+
+        /* Títulos das Tabelas */
+        h2 {
             color: red;
-            font-family: Geneva;
             text-align: center;
-            font-size: 45px; 
+            font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+            margin: 25px 0 10px 0;
         }
-        h11 {
-            color: red;
-            font-family: Geneva;
+
+        /* Wrapper da Tabela para Rolagem Horizontal no Mobile */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            color: #ffffff;
             text-align: center;
-            font-size: 30px; 
+            min-width: 600px; /* Garante que os dados fiquem legíveis no celular */
         }
-        h12 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
+
+        th, td {
+            border: 1px solid #ffffff;
+            padding: 8px 10px;
+            vertical-align: middle;
         }
-        h13 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
+
+        th {
+            background-color: #1a1a1a;
+            color: goldenrod;
+            font-weight: bold;
         }
-        h14 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        h15 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        h16 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        h17 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        h18 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        h19 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        h20 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        h21 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 30px; 
-        }
-        .section {
-            color: white;
-            font-family: sans-serif;
-            font-size: 30px; 
-            align-items: center;
+
+        /* Seção de Botões */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 30px 0;
         }
 
         button {
-            margin: 5px;
-            padding: 10px 20px;
+            padding: 10px 16px;
             border: none;
             border-radius: 5px;
-            background-color: white;
-            color: black;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 0.9rem;
+            font-weight: bold;
             cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         button:hover {
             background-color: red;
+            color: #ffffff;
         }
 
+        /* Rodapé */
         footer {
-            font-family: Geneva;
             text-align: center;
-            font-size: 20px;
-            color: white;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #333333;
+            font-size: 1rem;
         }
-        @media print { 
-            #noprint { display:none; } 
-            body { background: #fff; }
+
+        footer p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        footer img {
+            max-width: 140px;
+            height: auto;
+        }
+
+        /* Estilos de Impressão */
+        @media print {
+            #noprint, .btn-group, nav { 
+                display: none !important; 
+            } 
+            body { 
+                background: #ffffff; 
+                color: #000000; 
             }
-        </style>
+            table, th, td {
+                color: #000000;
+                border-color: #000000;
+            }
+            .table-container {
+                border: none;
+                overflow: visible;
+            }
+        }
+    </style>
 </head>
-<header>
-    <i>
-    <div class="center">
-    <nav>
-<ul>
-    <a href="index.html">A história da loja</a>
-    <a href="fichasbrasil.html">Fichas do Brasil</a>
-    <a href="biblioteca.html">Literatura Filatélica & Numismática</a>
-    <a href="moedasavenda.html">Moedas a Venda Brasil</a>
-    <a href="comprar.html">Como Comprar</a> 
-</ul>
-</nav>  
-<img src="./img/logo.png"></img>
-<br><h10>Moedas anômalas Brasil:</h10></br>
-</header>
-</center>
 <body>
-  
-    <center>
-    <section>
-    <table id="tabela1">   
-    <h11>Tabela 01: Cunhos duplos de R$ 0,01</h11>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,01</td><td>1997</td><td>MBC</td><td>Cunho duplo "Brasil" + "Data no anverso"</td><td>R$ 50,00</td></tr>
-    <tr><td>R$ 0,01</td><td>1999</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 120,00</td></tr>
-    <tr><td>R$ 0,01</td><td>2000</td><td>MBC</td><td>Cunho duplo "Brasil", "Mastro" e "Cabral"</td><td> R$ 130,00</td></tr>
-    </table>
-    <section>
-    </center> 
-    
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
 
-<br>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">A história da loja</a></li>
+                    <li><a href="fichasbrasil.html">Fichas do Brasil</a></li>
+                    <li><a href="biblioteca.html">Literatura Filatélica & Numismática</a></li>
+                    <li><a href="moedasavenda.html">Moedas a Venda Brasil</a></li>
+                    <li><a href="comprar.html">Como Comprar</a></li>
+                </ul>
+            </nav>  
+            <img src="./img/logo.png" alt="Logo Zanoni Numismática" class="logo">
+            <h1>Moedas Anômalas Brasil</h1>
+        </header>
 
-<center>
-    <section>
-    <table id="tabela2">    
-    <h12>Tabela 02: Anomalias Diversas de R$ 0,05</h12>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,05</td><td>1994</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1994</td><td>MBC</td><td>Cunho Quebrado no Anverso</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1995</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1997</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1999</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 80,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2000</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 70,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Com excesso de metal na letra "A"</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Reverso Inclinado à Direita</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2003</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho Marcado - Sinas da data duplicada no anverso e sinais do busto de Tiradentes no reverso</td><td>R$ 55,00</td></tr> 
-    <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho Marcado - Sinal do busto do Tiradentes no reverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Reverso Inclinado à Direita</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2005</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2005</td><td>MBC</td><td>Cunho Marcado - Sinal do busto do Tiradentes no reverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2005</td><td>MBC</td><td>Cunho Marcado - Sinas da data no anverso e sinais do busto de Tiradentes no reverso</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2006</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2007</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2007</td><td>MBC</td><td>Cunho Marcado - Sinas da data no anverso e sinais do busto de Tiradentes no reverso</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2008</td><td>MBC</td><td>Com excesso de metal na letra "A"</td><td>R$ 70,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2009</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2010</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2010</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2012</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho Marcado - Linhas em relevo no anverso da moeda</td><td>R$ 15,00</td></tr>
-    </table>
-    </section>
-    </center>
+        <main>
+            <!-- Tabela 01 -->
+            <h2>Tabela 01: Cunhos duplos de R$ 0,01</h2>
+            <div class="table-container">
+                <table id="tabela1">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,01</td><td>1997</td><td>MBC</td><td>Cunho duplo "Brasil" + "Data no anverso"</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 0,01</td><td>1999</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 120,00</td></tr>
+                        <tr><td>R$ 0,01</td><td>2000</td><td>MBC</td><td>Cunho duplo "Brasil", "Mastro" e "Cabral"</td><td>R$ 130,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
-    
-    <br>
+            <!-- Tabela 02 -->
+            <h2>Tabela 02: Anomalias Diversas de R$ 0,05</h2>
+            <div class="table-container">
+                <table id="tabela2">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,05</td><td>1994</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1994</td><td>MBC</td><td>Cunho Quebrado no Anverso</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1995</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1997</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1999</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 80,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2000</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 70,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Com excesso de metal na letra "A"</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Reverso Inclinado à Direita</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2003</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho Marcado - Sinas da data duplicada no anverso e sinais do busto de Tiradentes no reverso</td><td>R$ 55,00</td></tr> 
+                        <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho Marcado - Sinal do busto do Tiradentes no reverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Reverso Inclinado à Direita</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2005</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2005</td><td>MBC</td><td>Cunho Marcado - Sinal do busto do Tiradentes no reverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2005</td><td>MBC</td><td>Cunho Marcado - Sinas da data no anverso e sinais do busto de Tiradentes no reverso</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2006</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2007</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2007</td><td>MBC</td><td>Cunho Marcado - Sinas da data no anverso e sinais do busto de Tiradentes no reverso</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2008</td><td>MBC</td><td>Com excesso de metal na letra "A"</td><td>R$ 70,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2009</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2010</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2010</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2012</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho Marcado - Linhas em relevo no anverso da moeda</td><td>R$ 15,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-<center>
-<section>
-    <table id="tabela3">
-    <h13>Tabela 03: Cunhos duplos de R$ 0,05</h13>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,05</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1995</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>Cunho duplo "Centravos" & "Valor Facial 5"</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>Cunho duplo "Sinal da data em triplicaidade acima da cabeça da República"</td><td>R$ 60,00</td></tr>
-    <tr><td>R$ 0,05</td><td>1997</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>Cunho duplo palavra "Centavos"</td><td>R$ 30,00</td></tr>    
-    <tr><td>R$ 0,05</td><td>2001</td><td>MBC-</td><td>Cunho duplo "Tiradentes"</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>Cunho duplo "Tiradentes"</td><td>R$ 20,00</td></tr>    
-    <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho duplo "Brasil" + o "Triângulo"</td><td>R$ 55,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho duplo "Centavos" e linhas inferiores do reverso</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho duplo "Data" marcada em duplicidade no anverso</td><td>R$ 35,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho duplo "Data" marcada em duplicidade no anverso</td><td>R$ 35,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2007</td><td>MBC</td><td>Cunho duplo "Centavos" letras "O" e "S"</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2010</td><td>MBC</td><td>Cunho duplo "Brasil", Triângulo e pontas das asas da pomba</td><td>R$ 55,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2011</td><td>MBC</td><td>Cunho duplo "Centavos" e linhas diagonais do reverso</td><td>R$ 35,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil" e "Triangulo"</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil", "Triangulo" e "Ponta da asa da pomba (esquerda)></td><td>R$ 55,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil", "Triangulo" e "Pontas das asas da pomba (direita e esquerda)></td><td>R$ 55,00</td></tr>
-    <tr><td>R$ 0,05</td><td>2015</td><td>MBC</td><td>Cunho duplo "Estrelas" (mas não deslocadas)</td><td>R$ 30,00</td></tr>
-    </table>
-</section>
-</center>
+            <!-- Tabela 03 -->
+            <h2>Tabela 03: Cunhos duplos de R$ 0,05</h2>
+            <div class="table-container">
+                <table id="tabela3">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,05</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1995</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>Cunho duplo "Centravos" & "Valor Facial 5"</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1996</td><td>MBC</td><td>Cunho duplo "Sinal da data em triplicaidade acima da cabeça da República"</td><td>R$ 60,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>1997</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>Cunho duplo palavra "Centavos"</td><td>R$ 30,00</td></tr>    
+                        <tr><td>R$ 0,05</td><td>2001</td><td>MBC-</td><td>Cunho duplo "Tiradentes"</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2001</td><td>MBC</td><td>Cunho duplo "Tiradentes"</td><td>R$ 20,00</td></tr>    
+                        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho duplo "Brasil" + o "Triângulo"</td><td>R$ 55,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho duplo "Centavos" e linhas inferiores do reverso</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2002</td><td>MBC</td><td>Cunho duplo "Data" marcada em duplicidade no anverso</td><td>R$ 35,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2004</td><td>MBC</td><td>Cunho duplo "Data" marcada em duplicidade no anverso</td><td>R$ 35,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2007</td><td>MBC</td><td>Cunho duplo "Centavos" letras "O" e "S"</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2010</td><td>MBC</td><td>Cunho duplo "Brasil", Triângulo e pontas das asas da pomba</td><td>R$ 55,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2011</td><td>MBC</td><td>Cunho duplo "Centavos" e linhas diagonais do reverso</td><td>R$ 35,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil" e "Triangulo"</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil", "Triangulo" e "Ponta da asa da pomba (esquerda)"</td><td>R$ 55,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil", "Triangulo" e "Pontas das asas da pomba (direita e esquerda)"</td><td>R$ 55,00</td></tr>
+                        <tr><td>R$ 0,05</td><td>2015</td><td>MBC</td><td>Cunho duplo "Estrelas" (mas não deslocadas)</td><td>R$ 30,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-<!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
--->
+            <!-- Tabela 04 -->
+            <h2>Tabela 04: Anomalias Diversas de R$ 0,10</h2>
+            <div class="table-container">
+                <table id="tabela4">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,10</td><td>1994</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1995</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1998</td><td>MBC</td><td>Reverso borrado com data parecida de 1995</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2003</td><td>MBC</td><td>"P. P. P."</td><td>R$ 25,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-<br>
+            <!-- Tabela 05 -->
+            <h2>Tabela 05: Cunhos duplos de R$ 0,10</h2>
+            <div class="table-container">
+                <table id="tabela5">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,10</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data triplicado no anverso e bem visível</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1995</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 20,00</td></tr> 
+                        <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho duplo "Brasil" + sinal da data no anverso</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho duplo "Brasil" + sinal da data no anverso</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho duplo "Data"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2000</td><td>MBC</td><td>Cunho duplo "Pedro I"</td><td>R$ 35,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2001</td><td>MBC</td><td>Cunho duplo "Pedro I"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2002</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2008</td><td>MBC</td><td>Cunho duplo "Brasil" + "PEDRO I"</td><td>R$ 50,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2011</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2011</td><td>MBC</td><td>Cunho duplo "Centavos"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2012</td><td>MBC</td><td>Cunho duplo "Brasil" (duplicação, mas sem deslocamento)</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 35,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2013</td><td>MBC</td><td>Cunho duplo "Centavos", "Data" e "Linha Inferiores do Reverso"</td><td>R$ 60,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2015</td><td>MBC</td><td>Cunho duplo "Data", "Estrelas" e "linhas Inferiores do Reverso"</td><td>R$ 60,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2018</td><td>MBC</td><td>Cunho duplo "Pedro I"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2018</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2020</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 70,00</td></tr>
+                        <tr><td>R$ 0,10</td><td>2021</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 70,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-<center>
-    <section>
-    <table id="tabela4">
-    <h14>Tabela 04: Anomalias Diversas de R$ 0,10</h14>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,10</td><td>1994</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1995</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 10,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1998</td><td>MBC</td><td>Reverso borrado com data parrecida de 1995</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2003</td><td>MBC</td><td>"P. P. P."</td><td>R$ 25,00</td></tr>
-    </table>
-    </section>
-    </center>
+            <!-- Tabela 06 -->
+            <h2>Tabela 06: Anomalias Diversas de R$ 0,25</h2>
+            <div class="table-container">
+                <table id="tabela6">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho fraco anverso e reverso da moeda</td><td>R$ 25,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
-    
-    <br>
+            <!-- Tabela 07 -->
+            <h2>Tabela 07: Cunhos duplos de R$ 0,25</h2>
+            <div class="table-container">
+                <table id="tabela7">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,25</td><td>2001</td><td>MBC</td><td>Cunho duplo: "Centavos", "Data", "Linhas Inferiores do Reverso", Linhas Superiores do Reverso" e "Valor Facial"</td><td>R$ 75,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2001</td><td>MBC</td><td>Cunho duplo: "Centavos", "Data", 05 Estrelas , "Linhas Inferiores do Reverso", Linhas Superiores do Reverso" e "Valor Facial"</td><td>R$ 90,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2001</td><td>MBC</td><td>Cunho duplo "Deodoro"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2002</td><td>MBC</td><td>Cunho duplo "Deodoro"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2002</td><td>MBC</td><td>Cunho duplo "Estrelas"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil", "Data" e "Estrelas"</td><td>R$ 60,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Centavos"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data" e "Estrelas"</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,25</td><td>2014</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 55,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <center>
-    <section>
-    <table id="tabela5">
-    <h15>Tabela 05: Cunhos duplos de R$ 0,10</h15>   
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,10</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data triplicado no anverso e bem visível</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1995</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 20,00</td></tr> 
-    <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho duplo "Brasil" + sinal da data no anverso</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1996</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho duplo "Brasil" + sinal da data no anverso</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho duplo "Data"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,10</td><td>1997</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2000</td><td>MBC</td><td>Cunho duplo "Pedro I</td><td>R$ 35,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2001</td><td>MBC</td><td>Cunho duplo "Pedro I"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2002</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2008</td><td>MBC</td><td>Cunho duplo "Brasil" + "PEDRO I"</td><td>R$ 50,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2011</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2011</td><td>MBC</td><td>Cunho duplo "Centavos"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2012</td><td>MBC</td><td>Cunho duplo "Brasil" (duplicação, mas sem deslocamento)</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 35,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2013</td><td>MBC</td><td>Cunho duplo "Centavos", "Data" e "Linha Inferiores do Reverso"</td><td>R$ 60,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2015</td><td>MBC</td><td>Cunho duplo "Data", "Estrelas" e "linhas Inferiores do Reverso"</td><td>R$ 60,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2018</td><td>MBC</td><td>Cunho duplo "Pedro I"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2018</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2020</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 70,00</td></tr>
-    <tr><td>R$ 0,10</td><td>2021</td><td>SOB</td><td>Cunho duplo "Pedro I"</td><td>R$ 70,00</td></tr>
-    </table>
-    </section>
-    <center>
+            <!-- Tabela 08 -->
+            <h2>Tabela 08: Anomalias Diversas de R$ 0,50</h2>
+            <div class="table-container">
+                <table id="tabela8">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,50</td><td>1994</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 15,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>1994</td><td>MBC</td><td>Moeda falsa de época</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>1995</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 15,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2008</td><td>MBC</td><td>Ausência da letra "S"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2008</td><td>MBC</td><td>Cunho Quebrado no Anverso</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2011</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2012</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2013</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2013</td><td>MBC</td><td>Cunho Entupido - palavra Rio Branco apagada</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2016</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
+            <!-- Tabela 09 -->
+            <h2>Tabela 09: Cunhos duplos de R$ 0,50</h2>
+            <div class="table-container">
+                <table id="tabela9">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 0,50</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>1995</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2002</td><td>MBC</td><td>Com as palavras "Rio Branco"</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2005</td><td>MBC</td><td>Com as palavras "Rio Branco"</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 0,50</td><td>2011</td><td>MBC</td><td>Com as palavras "Centavos", nas letras "O" e "S"</td><td>R$ 25,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-     <br>
+            <!-- Tabela 10 -->
+            <h2>Tabela 10: Anomalias Diversas: R$ 1,00</h2>
+            <div class="table-container">
+                <table id="tabela10">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 1,00</td><td>2008</td><td>MBC</td><td>FALTAM DUAS ESTRELAS</td><td>R$ 15,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2016 (ATLETISMO)</td><td>MBC</td><td>DATA MARCADA NO ANVERSO</td><td>R$ 40,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-     <center>
-    <section>
-    <table id="tabela6">
-    <h16>Tabela 06: Anomalias Diversas de R$ 0,25</h16>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho fraco anverso e reverso da moeda</td><td>R$ 25,00</td></tr>
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
-    </table>
-    </section>
-    </center>
-    
-    <br>
-        
-    <center>
-    <section>
-    <table id="tabela7">
-    <h17>Tabela 07: Cunhos duplos de R$ 0,25</h17>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,25</td><td>2001</td><td>MBC</td><td>Cunho duplo: "Centavos",  "Data",  "Linhas Inferiores do Reverso", Linhas Superiores do Reverso" e "Valor Facial"</td><td>R$ 75,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2001</td><td>MBC</td><td>Cunho duplo: "Centavos",  "Data", 05 Estrelas , "Linhas Inferiores do Reverso", Linhas Superiores do Reverso" e "Valor Facial"</td><td>R$ 90,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2001</td><td>MBC</td><td>Cunho duplo "Deodoro"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2002</td><td>MBC</td><td>Cunho duplo "Deodoro"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2002</td><td>MBC</td><td>Cunho duplo "Estrelas"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil", "Data" e "Estrelas"</td><td>R$ 60,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Centavos"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data" e "Estrelas"</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,25</td><td>2014</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 55,00</td></tr>
-    </table>
-    </section>
-    </center>
-    
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
+            <!-- Tabela 11 -->
+            <h2>Tabela 11: Cunhos duplos de R$ 1,00</h2>
+            <div class="table-container">
+                <table id="tabela11">
+                    <thead>
+                        <tr><th>Valor Facial</th><th>Ano</th><th>Conservação</th><th>Anomalia</th><th>Preço (unitário)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>R$ 1,00</td><td>2011</td><td>MBC</td><td>Cunho duplo "Estrelas"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data"</td><td>R$ 25,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Estrelas"</td><td>R$ 20,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data e Linhas do Reverso"</td><td>R$ 40,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
+                        <tr><td>R$ 1,00</td><td>2022</td><td>MBC/SOB</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
-    <br>
-    
-    <center>
-    <section>
-    <table id="tabela8">
-    <h18>Tabela 08: Anomalias Diversas de R$ 0,50</h18>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,50</td><td>1994</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 15,00</td></tr>
-    <tr><td>R$ 0,50</td><td>1994</td><td>MBC</td><td>Moeda falsa de época</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 0,50</td><td>1995</td><td>MBC</td><td>Cunho Marcado - Sinal da data no anverso da moeda</td><td>R$ 15,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2008</td><td>MBC</td><td>Ausência da letra "S"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2008</td><td>MBC</td><td>Cunho Quebrado no Anverso</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2011</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2012</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2013</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2013</td><td>MBC</td><td>Cunho Entupido - palavra Rio Branco apagada</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2016</td><td>MBC</td><td>Borda com pequeno boné</td><td>R$ 30,00</td></tr>
+            <!-- Botões de Ação -->
+            <div class="btn-group">
+                <button onclick="window.print()">Imprimir Página</button>
+                <button onclick="salvarTabelaComoPDF('tabela1', 'Tabela_1_R$0,01')">PDF Tab. 1</button>
+                <button onclick="salvarTabelaComoPDF('tabela2', 'Tabela_2_R$0,05')">PDF Tab. 2</button>
+                <button onclick="salvarTabelaComoPDF('tabela3', 'Tabela_3_R$0,05')">PDF Tab. 3</button>
+                <button onclick="salvarTabelaComoPDF('tabela4', 'Tabela_4_R$0,10')">PDF Tab. 4</button>
+                <button onclick="salvarTabelaComoPDF('tabela5', 'Tabela_5_R$0,10')">PDF Tab. 5</button>
+                <button onclick="salvarTabelaComoPDF('tabela6', 'Tabela_6_R$0,25')">PDF Tab. 6</button>
+                <button onclick="salvarTabelaComoPDF('tabela7', 'Tabela_7_R$0,25')">PDF Tab. 7</button>
+                <button onclick="salvarTabelaComoPDF('tabela8', 'Tabela_8_R$0,50')">PDF Tab. 8</button>
+                <button onclick="salvarTabelaComoPDF('tabela9', 'Tabela_9_R$0,50')">PDF Tab. 9</button>
+                <button onclick="salvarTabelaComoPDF('tabela10', 'Tabela_10_R$1,00')">PDF Tab. 10</button>
+                <button onclick="salvarTabelaComoPDF('tabela11', 'Tabela_11_R$1,00')">PDF Tab. 11</button>
+            </div>
+        </main>
 
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
-    </table>
-    </section>
-    </center>
-        
-    <br>
+        <footer>
+            <p>Site desenvolvido por Juliano 
+                <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo Juliano Zanoni">
+            </p>
+        </footer>
+    </div>
 
-    <center>   
-    <section>
-    <table id="tabela9">
-    <h19>Tabela 09: Cunhos duplos de  R$ 0,50</h19>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 0,50</td><td>1994</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,50</td><td>1995</td><td>MBC</td><td>Cunho Marcado - data duplicada no anverso e bem visível</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2002</td><td>MBC</td><td>Com as palavras "Rio Branco"</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2005</td><td>MBC</td><td>Com as palavras "Rio Branco"</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 0,50</td><td>2011</td><td>MBC</td><td>Com as palavras "Centavos", nas letras "O" e "S"</td><td>R$ 25,00</td></tr>
-    </table>
-    </section>
-    </center>
+    <script>
+        function salvarTabelaComoPDF(tabelaId, titulo) {
+            const tabela = document.getElementById(tabelaId);
 
-    <!--
-    <tr><td>R$ 0,50</td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ 0,50</td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ 0,50</td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
-    
-    <br>
-    
-    <center>   
-    <section>
-    <table id="tabela10">    
-    <h20>Tabela 10: Anomalias Diversas: R$ 1,00</h20>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 1,00</td><td>2008</td><td>MBC</td><td>FALTAM DUAS ESTRELAS</td><td>R$ 15,00</td></tr>
-    <tr><td>R$ 1,00</td><td>2016 (ATLETISMO)</td><td>MBC</td><td>DATA MARCADA NO ANVERSO</td><td>R$ 40,00</td></tr>
-    </table>
-    </section>
-    </center>
+            if (!tabela) {
+                alert("Tabela não encontrada!");
+                return;
+            }
 
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
-    
-    <br>
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
 
-    <center>   
-    <section>
-    <table id="tabela11">    
-    <h21>Tabela 11: Cunhos duplos de R$ 1,00</h21>
-    <tr><td>Valor Facial</td><td>Ano</td><td>Conservação</td><td>Anomalia</td><td>Preço (unitário)</td></tr>
-    <tr><td>R$ 1,00</td><td>2011</td><td>MBC</td><td>Cunho duplo "Estrelas"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data"</td><td>R$ 25,00</td></tr>
-    <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Estrelas"</td><td>R$ 20,00</td></tr>
-    <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Data e Linhas do Reverso"</td><td>R$ 40,00</td></tr>
-    <tr><td>R$ 1,00</td><td>2013</td><td>MBC</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
-    <tr><td>R$ 1,00</td><td>2022</td><td>MBC/SOB</td><td>Cunho duplo "Brasil"</td><td>R$ 30,00</td></tr>
-    </table>
-    </section>
-    </center>
-        
-    <!--
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    <tr><td>R$ </td><td> </td><td> </td><td> </td><td>R$ </td></tr>
-    -->
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(14);
+            doc.text(titulo.replace(/_/g, ' '), 14, 15);
 
-    <br>
-    
-    <button onclick="print()">Imprimir</button>
-    <button onclick="salvarTabelaComoPDF('tabela1', 'Tabela de Cunhos Duplos R$ 0,01')">Salvar Tabela 1 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela2', 'Tabela de Anomalias Diversas R$ 0,05')">Salvar Tabela 2 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela3', 'Cunhos duplos:R$ 0,05')">Salvar Tabela 3 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela4', 'Anomalias Diversas: R$ 0,10')">Salvar Tabela 4 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela5', 'Cunhos duplos:R$ 0,10')">Salvar Tabela 5 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela6', 'Anomalias Diversas: R$ 0,25')">Salvar Tabela 6 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela7', 'Cunhos duplos:R$ 0,25')">Salvar Tabela 7 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela8', 'Anomalias Diversas:R$ 0,50')">Salvar Tabela 8 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela9', 'Cunhos duplos: R$ 0,50')">Salvar Tabela 9 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela10', 'Anomalias Diversas: R$ 1,00')">Salvar Tabela 10 como PDF</button>
-    <button onclick="salvarTabelaComoPDF('tabela11', 'Cunhos duplos: R$ 1,00')">Salvar Tabela 11 como PDF</button>
+            doc.autoTable({
+                html: `#${tabelaId}`,
+                startY: 22,
+                theme: 'grid',
+                styles: {
+                    font: "helvetica",
+                    fontSize: 9,
+                    textColor: [0, 0, 0],
+                    fillColor: [255, 255, 255]
+                },
+                headStyles: {
+                    fillColor: [200, 200, 200],
+                    textColor: [0, 0, 0],
+                    fontStyle: 'bold'
+                }
+            });
 
-    <br>
-
-<center>
-<footer>
-    <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
-</footer>
-</i>
-
-</div>  
+            doc.save(`${titulo}.pdf`);
+        }
+    </script>
 </body>
-</center>
-
-<script>
-   function salvarTabelaComoPDF(tabelaId, titulo) {
-    // Obter a tabela pelo ID
-    const tabela = document.getElementById(tabelaId);
-
-    if (!tabela) {
-        alert("Tabela não encontrada!");
-        return;
-    }
-
-    // Criar um novo documento PDF
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    // Configurar o título
-    doc.setFont("helvetica", "bold");
-    doc.text(titulo, 10, 10);
-
-    // Gerar tabela no PDF
-    doc.autoTable({
-        html: `#${tabelaId}`, // Seleciona a tabela pelo ID
-        startY: 20,           // Posição onde a tabela começa
-        styles: {
-            font: "helvetica",
-            fontSize: 10,
-            textColor: [0, 0, 0], // Cor do texto: preto
-            fillColor: [255, 255, 255], // Cor do fundo: branco (sem preenchimento)
-        },
-        headStyles: {
-            fillColor: [200, 200, 200], // Cor do cabeçalho: cinza claro
-            textColor: [0, 0, 0], // Texto do cabeçalho: preto
-        },
-    });
-
-    // Salvar o arquivo PDF
-    doc.save(`${titulo}.pdf`);
-}
-</script>
-
-
-
 </html>

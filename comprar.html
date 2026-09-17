@@ -1,133 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Como comprar</title>
+    <title>Como Comprar - Numismática Zanoni</title>
+    <link rel="stylesheet" href="index.css">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            color: white;
-            background-color: black;
-            font-family: Geneva;
-            align-items: center;
+            color: #ffffff;
+            background-color: #000000;
+            font-family: Geneva, Tahoma, Verdana, sans-serif;
+            line-height: 1.6;
+            padding: 15px;
         }
-        ul {
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Menu Responsivo */
+        nav ul {
             display: flex;
-            justify-content: space-between;
-            list-style-type: nome;
-            align-items: center;
-            padding: 16px;
-            font-size: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            list-style: none;
+            padding: 15px 0;
         }
-        a {
-            color: blue;
-            text-decoration: nome;
-        }
-        a:active { 
-            color: red;
-        }    
-        nav a:hover {
-            color: blue;
-        }
-        header img {
-            width: 300px;
-            height: 200px;
-            border: 5px solid goldenrod;
-        }
-        section {
-            color: white;
-            font-family: Geneva;
-            font-size: 30px; 
-        }
-        p {
-            color: white;
-            font-family: Geneva;
-            font-size: 30px;
-            text-align: center; 
-        }
-        .center {
+
+        nav a {
+            color: #4d94ff;
+            text-decoration: none;
+            font-size: 1.1rem;
             text-align: center;
+            transition: color 0.3s ease;
         }
+
+        nav a:hover, nav a:active {
+            color: #ffffff;
+        }
+
+        /* Topo e Cabeçalho */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header img.logo {
+            max-width: 100%;
+            width: 280px;
+            height: auto;
+            border: 4px solid goldenrod;
+            margin: 15px 0;
+        }
+
         h1 {
             color: red;
-            font-family: Geneva;
-            text-align: cemter;
-            font-size: 45px; 
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            margin: 15px 0;
         }
+
+        /* Conteúdo das Seções */
+        section {
+            margin-bottom: 25px;
+        }
+
         h2 {
             color: red;
-            font-family: Geneva;
             text-align: center;
-            font-size: 45px; 
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            margin-bottom: 10px;
         }
-        h3 {
-            color: red;
-            font-family: Geneva;
+
+        p {
+            color: #ffffff;
+            font-size: 1.1rem;
+            text-align: justify;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        p a {
+            color: #4d94ff;
+        }
+
+        /* Rodapé */
+        footer {
             text-align: center;
-            font-size: 45px; 
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #333333;
         }
-        h4 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 45px; 
+
+        footer p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 1rem;
         }
-        h5 {
-            color: red;
-            font-family: Geneva;
-            text-align: center;
-            font-size: 45px; 
+
+        footer img {
+            max-width: 140px;
+            height: auto;
         }
-        .container {
-            padding: 0px 35px;
-        }
-        </style>
+    </style>
 </head>
-<header>
-
-    <i>
-
-    <div class="center">
-    <nav>
-<ul>
-    <a href="index.html">A história da loja</a>
-    <a href="fichasbrasil.html">Fichas do Brasil</a>
-    <a href="biblioteca.html">Literatura Filatélica & Numismática</a>
-    <a href="moedasavenda.html">Moedas a Venda Brasil</a>
-    <a href="moedasanomalas.html">Moedas Anômalas Brasil</a>
-</ul>
-</nav>  
-<img src="./img/logo.png"></img>
-<h1>Como Comprar:</h1>
-</div>
-</header>
 <body>
 
-    <center>
+    <div class="container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">A história da loja</a></li>
+                    <li><a href="fichasbrasil.html">Fichas do Brasil</a></li>
+                    <li><a href="biblioteca.html">Literatura Filatélica & Numismática</a></li>
+                    <li><a href="moedasavenda.html">Moedas à Venda Brasil</a></li>
+                    <li><a href="moedasanomalas.html">Moedas Anômalas Brasil</a></li>
+                </ul>
+            </nav>  
 
-     <h2>Contato</h2>
-        <p>
-    <section> O canal de comunicação de nossa loja ocorrerá apenas pelo E-mail: julianozanoni2014@gmail.com .Observamos que os pedidos serão deverão ser realizados apenas por e-mail nesse quesito</section>
-        </p>
-     <h3>Peça o nosso boletim de produtos.</h3>
-        <p>
-    <section>Observamos que encaminhamos via e-mail, os boletins solicitados na versão em pdf e conjuntamente um formulário para requerimento dos exemplares na versão do word. Caso exista interesse reencaminhe o formulário preenchido com o seu pedido que lhe retornaremos o mais breve que possível.</section>
-        </p>
-    <h4>Forma de pagamento</h4>
-        <p>
-    <section>A única forma de pagamento que trabalhos é a de deposito bancário e para tanto trabalhamos com o banco Caixa Econômica Federal, os dados bancários estão disponíveis no formulário que irá junto com o boletim dos produtos. Observa-se que o pagamento deverá ser efetivado somente após a confirmação dos produtos disponíveis ainda presente em nossos estoques.</section>
-        </p>
-    <h5>A entrega</h5>
-        <p>
-    <section>Já o envio do material será despachado por sedex.</section>
-        </p>
+            <img src="./img/logo.png" alt="Logo Numismática Zanoni" class="logo">
+            <h1>Como Comprar:</h1>
+        </header>
+
+        <main>
+            <section>
+                <h2>Contato</h2>
+                <p>O canal de comunicação de nossa loja ocorrerá apenas pelo E-mail: <a href="mailto:julianozanoni2014@gmail.com">julianozanoni2014@gmail.com</a>. Observamos que os pedidos deverão ser realizados apenas por e-mail nesse quesito.</p>
+            </section>
+
+            <section>
+                <h2>Peça o nosso boletim de produtos</h2>
+                <p>Observamos que encaminhamos via e-mail os boletins solicitados na versão em PDF e conjuntamente um formulário para requerimento dos exemplares na versão do Word. Caso exista interesse, reencaminhe o formulário preenchido com o seu pedido que lhe retornaremos o mais breve possível.</p>
+            </section>
+
+            <section>
+                <h2>Forma de pagamento</h2>
+                <p>A única forma de pagamento com a qual trabalhamos é a de depósito bancário e para tanto trabalhamos com o banco Caixa Econômica Federal. Os dados bancários estão disponíveis no formulário que irá junto com o boletim dos produtos. Observa-se que o pagamento deverá ser efetivado somente após a confirmação dos produtos disponíveis ainda presentes em nossos estoques.</p>
+            </section>
+
+            <section>
+                <h2>A entrega</h2>
+                <p>Já o envio do material será despachado por SEDEX.</p>
+            </section>
+        </main>
+
         <footer>
-            <p>Site desenvolvido por Juliano <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni"></p>
+            <p>Site desenvolvido por Juliano 
+                <img src="https://d1yei2z3i6k35z.cloudfront.net/6946809/65e45ac72773e_zanoni.1.png" alt="Logo de Juliano Zanoni">
+            </p>
         </footer>
-    
-    </i>
-    
-    </center>
+    </div>
 
-    </body>
+</body>
 </html>
